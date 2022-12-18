@@ -1,6 +1,7 @@
 import random
 import utils
-
+import os
+clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
 class Card:
     def __init__(self, name, cost, attack):
