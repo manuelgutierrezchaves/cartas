@@ -83,17 +83,29 @@ class Game:
     game = Game()
 
     while game.turn <= 6:
-        # Repartir una carta a cada jugador al inicio de cada turno
+        # game.show_locations()
+        # print(game)
         game.bottom_player.deal_hand(1)
         game.top_player.deal_hand(1)
 
+        # Mostrar pantalla
+        game.show_locations()
+        print(game)
+
         # Pedir al jugador que elija una ubicación y una carta para jugar
-        player = 0  # Suponemos que sólo hay un jugador en este ejemplo
-        print(f"Turno {game.turn}. Tienes {game.points[game.turn - 1]} puntos disponibles.")
-        location = int(input("Elige una ubicación (0-2): "))
-        card_index = int(input("Elige una carta (0-{}): ".format(len(game.cards[player]) - 1)))
-        card = game.cards[player][card_index]
-        if card.cost > game.points[game.turn - 1]:
+        location = int(input("\n\n1 - left\n2 - center\n3 - right\n\nElige una ubicación: "))
+        clear()
+        game.show_locations()
+        print(game)
+        print('\n')
+        for idx, card in enumerate(game.bottom_player.hand):
+            print(f'{idx+1} - {card.name}')
+        card_index = int(input('Escoge una carta: '))
+        clear()
+        card = game.bottom_player.hand[card_index-1]
+        print(card.name)
+
+        if card.cost > game.turn:
             print("No tienes suficientes puntos para jugar esa carta.")
             continue
         # Jugar la carta
