@@ -22,6 +22,26 @@ class Player:
         random.shuffle(self.deck)
 
 
+class Location:
+    def __init__(self):
+        self.cards = {'top': [], 'bottom': []}
+
+    def add_card(self, player, card):  # player == 'top' or 'bottom'
+        self.cards[player].append(card)
+    
+    def update(self):
+        self.top_points = sum(card.attack for card in self.cards['top'])
+        self.bottom_points = sum(card.attack for card in self.cards['bottom'])
+
+    def check_winner(self):
+        if self.top_points == self.bottom_points:
+            return 'empate'
+        elif self.top_points > self.bottom_points:
+            return 'top'
+        elif self.top_points < self.bottom_points:
+            return 'bottom'
+
+
 class Game:
     def __init__(self):
         self.turn = 1
@@ -69,5 +89,11 @@ def play_game(num_players):
 
 if __name__ == '__main__':
     # play_game(2)s
-    jugador_1 = Player('cartas_1.json')
-    print(jugador_1.deck[0].name)
+    # jugador_1 = Player('cartas_1.json')
+    # print(jugador_1.deck[0].name)
+    carta1 = Card('Punisher', 2, 4)
+    carta2 = Card('Medusa', 2, 2)
+    mapa = Location()
+    mapa.add_card('top', carta1)
+    mapa.add_card('top', carta2)
+    mapa.check_winner()
