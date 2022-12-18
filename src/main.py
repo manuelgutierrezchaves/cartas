@@ -1,6 +1,7 @@
 import random
 import utils
 import os
+from collections import Counter
 clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
 
@@ -92,6 +93,12 @@ class Game:
             self.bottom_player.remove_card_from_hand(card)
             self.locations[location].add_card(player, card)
 
+    def check_game_winner(self):
+        winner_locations = [location.check_location_winner() for location in self.locations.values()]
+        contador = Counter(winner_locations)
+        elementos_ordenados = contador.most_common()  # [('top', 2), ('bottom', 1)]
+        return elementos_ordenados[0][0]
+
 
 def play_game():
     game = Game()
@@ -124,6 +131,7 @@ def play_game():
         clear()
         card = game.bottom_player.hand[card_index-1]
 
+        # Comprobar energia
         if card.cost > game.turn:
             print("No tienes suficientes puntos para jugar esa carta.")
         else:
@@ -133,9 +141,9 @@ def play_game():
 
 
     # Determinar ganador
-    attacks = [sum(card.attack for card in location) for location in game.board]
-    winner = attacks.index(max(attacks))
-    print(f"El ganador es el jugador {winner} con {attacks[winner]}   puntos de ataque.")
+    winner = game.check_game_winner()
+    clear()
+    print(f"El ganador es el jugador {winner}.")
 
 
 if __name__ == '__main__':
