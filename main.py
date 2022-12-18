@@ -17,15 +17,17 @@ class Player:
                           attack=card_values['attack'],
                           ) for card_values in card_list]
         self.suffle_deck()
+        self.hand = []
         self.deal_hand(3)  # Reparte 3 al inicio
 
     def suffle_deck(self):
         random.shuffle(self.deck)
 
     def deal_hand(self, quantity):
-        self.hand = random.sample(self.deck, quantity)
-        for card in self.hand:
+        choosen_cards = random.sample(self.deck, quantity)
+        for card in choosen_cards:
             self.deck.remove(card)
+        self.hand.extend(choosen_cards)
 
 
 class Location:
