@@ -34,9 +34,11 @@ class Player:
 class Location:
     def __init__(self):
         self.cards = {'top': [], 'bottom': []}
+        self.update()
 
     def add_card(self, player, card):  # player == 'top' or 'bottom'
         self.cards[player].append(card)
+        self.update()
 
     def update(self):
         self.top_points = sum(card.attack for card in self.cards['top'])
@@ -61,8 +63,23 @@ class Game:
         self.bottom_player = Player('cartas_1.json')
         self.top_player = Player('cartas_2.json')
 
+    def __repr__(self) -> str:
+        nombres = ""
+        costes = ""
+        ataques = ""
 
-def play_game(num_players):
+        for carta in self.bottom_player.hand:
+            nombres += carta.name + 4*" "
+            costes += str(carta.cost).center(len(carta.name), " ") + 4*" "
+            ataques += str(carta.attack).center(len(carta.name), " ") + 4*" "
+
+        return f'\n\n{nombres}\n{costes}\n{ataques}\n\nTurn: {self.turn}'
+
+    def show_locations(self):
+        location_names = ''
+        for location_name in self.locations.keys():
+            location_names += location_name + 4*" "
+        print(location_names)
     game = Game()
 
     while game.turn <= 6:
