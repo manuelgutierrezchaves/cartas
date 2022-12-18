@@ -1,0 +1,51 @@
+{
+  "Marauder": {
+    "cost": 6,
+    "attack": 5
+  },
+  "Annihilator": {
+    "cost": 4,
+    "attack": 4
+  },
+  "Dominator": {
+    "cost": 5,
+    "attack": 3
+  },
+  "Punisher": {
+    "cost": 2,
+    "attack": 4
+  },
+  "Apocalypse": {
+    "cost": 1,
+    "attack": 5
+  },
+  "Termination": {
+    "cost": 3,
+    "attack": 2
+  },
+  "Demon": {
+    "cost": 2,
+    "attack": 3
+  },
+  "Inferno": {
+    "cost": 1,
+    "attack": 4
+  },
+  "Devastator": {
+    "cost": 4,
+    "attack": 3
+  },
+  "Obliterator": {
+    "cost": 5,
+    "attack": 2
+  },
+  "Exterminator": {
+    "cost": 6,
+    "attack": 1
+  },
+  "Crusader": {
+    "cost": 4,
+    "attack": 4
+  }
+  
+}

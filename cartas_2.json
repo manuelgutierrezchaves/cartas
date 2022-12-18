@@ -1,0 +1,51 @@
+{
+    "Warrior": {
+      "cost": 6,
+      "attack": 5
+    },
+    "Assassin": {
+      "cost": 4,
+      "attack": 4
+    },
+    "Scout": {
+      "cost": 5,
+      "attack": 3
+    },
+    "Sentry": {
+      "cost": 2,
+      "attack": 4
+    },
+    "Defender": {
+      "cost": 1,
+      "attack": 5
+    },
+    "Marksman": {
+      "cost": 3,
+      "attack": 2
+    },
+    "Bladesman": {
+      "cost": 2,
+      "attack": 3
+    },
+    "Shadow": {
+      "cost": 1,
+      "attack": 4
+    },
+    "Deflector": {
+      "cost": 4,
+      "attack": 3
+    },
+    "Raider": {
+      "cost": 5,
+      "attack": 2
+    },
+    "Breaker": {
+      "cost": 6,
+      "attack": 1
+    },
+    "Champion": {
+          "cost": 6,
+          "attack": 5
+    }      
+}
+  
