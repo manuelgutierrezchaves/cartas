@@ -1,8 +1,7 @@
 import random
-import utils
 import os
-from collections import Counter
-clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
+import time
+import utils
 
 
 class Card:
@@ -34,8 +33,6 @@ class Player:
 
     def remove_card_from_hand(self, card):
         self.hand.remove(card)
-
-
 
 
 class Location:
@@ -74,12 +71,10 @@ class Game:
         nombres = ""
         costes = ""
         ataques = ""
-
         for carta in self.bottom_player.hand:
             nombres += carta.name + 4*" "
             costes += str(carta.cost).center(len(carta.name), " ") + 4*" "
             ataques += str(carta.attack).center(len(carta.name), " ") + 4*" "
-
         return f'\n\n{nombres}\n{costes}\n{ataques}\n\nTurn: {self.turn}'
 
     def show_locations(self):
@@ -94,10 +89,18 @@ class Game:
             self.locations[location].add_card(player, card)
 
     def check_game_winner(self):
+        winner_player = {'top': 0, 'bottom': 0, 'empate': 0}
         winner_locations = [location.check_location_winner() for location in self.locations.values()]
-        contador = Counter(winner_locations)
-        elementos_ordenados = contador.most_common()  # [('top', 2), ('bottom', 1)]
-        return elementos_ordenados[0][0]
+        for player in winner_locations:
+            winner_player[player] += 1
+        print(winner_player)
+        time.sleep(5)
+        if winner_player['top'] > winner_player['bottom']:
+            return 'top'
+        elif winner_player['top'] < winner_player['bottom']:
+            return 'bottom'
+        else:
+            return 'empate'
 
 
 def play_game():
@@ -118,7 +121,7 @@ def play_game():
         location_num = int(input("\n\n1 - left\n2 - center\n3 - right\n\nElige una ubicación: "))
         location = location_numbers[location_num]
 
-        clear()
+        utils.clear()
         # Mostrar pantalla
         game.show_locations()
         print(game)
@@ -128,7 +131,7 @@ def play_game():
         for idx, card in enumerate(game.bottom_player.hand):
             print(f'{idx+1} - {card.name}')
         card_index = int(input('\nEscoge una carta: '))
-        clear()
+        utils.clear()
         card = game.bottom_player.hand[card_index-1]
 
         # Comprobar energia
@@ -137,23 +140,16 @@ def play_game():
         else:
             # Jugar la carta
             game.play_card('bottom', location, card)
-        game.turn += 1
 
+        game.play_card('top', 'center', game.top_player.hand[0])
+        game.turn += 1
 
     # Determinar ganador
     winner = game.check_game_winner()
-    clear()
+    utils.clear()
     print(f"El ganador es el jugador {winner}.")
 
 
 if __name__ == '__main__':
-    clear()
+    utils.clear()
     play_game()
-    # jugador_1 = Player('cartas_1.json')
-    # print(jugador_1.deck[0].name)
-    # carta1 = Card('Punisher', 2, 4)
-    # carta2 = Card('Medusa', 2, 2)
-    # mapa = Location()
-    # mapa.add_card('top', carta1)
-    # mapa.add_card('top', carta2)
-    # mapa.check_winner()
