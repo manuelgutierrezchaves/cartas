@@ -17,9 +17,15 @@ class Player:
                           attack=card_values['attack'],
                           ) for card_values in card_list]
         self.suffle_deck()
+        self.deal_hand(3)  # Reparte 3 al inicio
 
     def suffle_deck(self):
         random.shuffle(self.deck)
+
+    def deal_hand(self, quantity):
+        self.hand = random.sample(self.deck, quantity)
+        for card in self.hand:
+            self.deck.remove(card)
 
 
 class Location:
@@ -28,12 +34,13 @@ class Location:
 
     def add_card(self, player, card):  # player == 'top' or 'bottom'
         self.cards[player].append(card)
-    
+
     def update(self):
         self.top_points = sum(card.attack for card in self.cards['top'])
         self.bottom_points = sum(card.attack for card in self.cards['bottom'])
 
-    def check_winner(self):
+    def check_location_winner(self):
+        self.update()
         if self.top_points == self.bottom_points:
             return 'empate'
         elif self.top_points > self.bottom_points:
@@ -45,27 +52,20 @@ class Location:
 class Game:
     def __init__(self):
         self.turn = 1
-        self.points = [turn for turn in range(1, 7)]
-        self.cards = [[] for _ in range(num_players)]
-        self.board = [[] for _ in range(3)]
-
-    def play_card(self, player, location, card):
-        self.cards[player].remove(card)
-        self.board[location].append(card)
+        self.locations = {'left': Location(),
+                          'center': Location(),
+                          'right': Location()}
+        self.bottom_player = Player('cartas_1.json')
+        self.top_player = Player('cartas_2.json')
 
 
 def play_game(num_players):
-    game = Game(num_players)
-
-    # Inicializar manos de cada jugador
-    for player in range(num_players):
-        for _ in range(3):
-            game.cards[player].append(Card(0, 0))
+    game = Game()
 
     while game.turn <= 6:
         # Repartir una carta a cada jugador al inicio de cada turno
-        for player in range(num_players):
-            game.cards[player].append(Card(0, 0))
+        game.bottom_player.deal_hand(1)
+        game.top_player.deal_hand(1)
 
         # Pedir al jugador que elija una ubicación y una carta para jugar
         player = 0  # Suponemos que sólo hay un jugador en este ejemplo
